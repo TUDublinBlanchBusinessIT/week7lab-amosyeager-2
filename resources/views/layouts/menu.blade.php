@@ -14,3 +14,11 @@
 </li>
 
 
+<li class="nav-item">
+    <a href="{{ route('scorders.index') }}"
+       class="nav-link {{ Request::is('scorders*') ? 'active' : '' }}">
+        <p>Scorders</p>
+    </a>
+</li>
+
+
