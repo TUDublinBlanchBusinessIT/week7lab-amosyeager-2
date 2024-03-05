@@ -2,51 +2,37 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Routing\Controller as BaseController;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Session;
+use InfyOm\Generator\Utils\ResponseUtil;
+use Response;
 
-class AppBaseController extends BaseController
+/**
+ * @SWG\Swagger(
+ *   basePath="/api/v1",
+ *   @SWG\Info(
+ *     title="Laravel Generator APIs",
+ *     version="1.0.0",
+ *   )
+ * )
+ * This class should be parent class for other API controllers
+ * Class AppBaseController
+ */
+class AppBaseController extends Controller
 {
-    /**
-     * Display a success flash message.
-     *
-     * @param string $message
-     */
-    protected function successMessage($message)
+    public function sendResponse($result, $message)
     {
-        Session::flash('success', $message);
+        return Response::json(ResponseUtil::makeResponse($message, $result));
     }
 
-    /**
-     * Display an error flash message.
-     *
-     * @param string $message
-     */
-    protected function errorMessage($message)
+    public function sendError($error, $code = 404)
     {
-        Session::flash('error', $message);
+        return Response::json(ResponseUtil::makeError($error), $code);
     }
 
-    /**
-     * Check if the current user is authenticated.
-     *
-     * @return bool
-     */
-    protected function isAuthenticated()
+    public function sendSuccess($message)
     {
-        return Auth::check();
+        return Response::json([
+            'success' => true,
+            'message' => $message
+        ], 200);
     }
-
-    /**
-     * Get the ID of the currently authenticated user.
-     *
-     * @return int|null
-     */
-    protected function getCurrentUserId()
-    {
-        return Auth::id();
-    }
-    
-    // Add more methods for common functionality as needed...
 }

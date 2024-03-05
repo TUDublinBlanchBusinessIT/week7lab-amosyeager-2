@@ -2,25 +2,26 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateproductRequest;
+use App\Http\Requests\UpdateproductRequest;
+use App\Repositories\productRepository;
+use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
-use App\Repositories\ProductRepository;
-use App\Http\Requests\CreateProductRequest;
-use App\Http\Requests\UpdateProductRequest;
 use Flash;
 use Response;
 
-class ProductController extends Controller
+class productController extends AppBaseController
 {
-    /** @var ProductRepository $productRepository */
+    /** @var productRepository $productRepository*/
     private $productRepository;
 
-    public function __construct(ProductRepository $productRepo)
+    public function __construct(productRepository $productRepo)
     {
         $this->productRepository = $productRepo;
     }
 
     /**
-     * Display a listing of the Product.
+     * Display a listing of the product.
      *
      * @param Request $request
      *
@@ -35,7 +36,7 @@ class ProductController extends Controller
     }
 
     /**
-     * Show the form for creating a new Product.
+     * Show the form for creating a new product.
      *
      * @return Response
      */
@@ -45,13 +46,13 @@ class ProductController extends Controller
     }
 
     /**
-     * Store a newly created Product in storage.
+     * Store a newly created product in storage.
      *
-     * @param CreateProductRequest $request
+     * @param CreateproductRequest $request
      *
      * @return Response
      */
-    public function store(CreateProductRequest $request)
+    public function store(CreateproductRequest $request)
     {
         $input = $request->all();
 
@@ -63,7 +64,7 @@ class ProductController extends Controller
     }
 
     /**
-     * Display the specified Product.
+     * Display the specified product.
      *
      * @param int $id
      *
@@ -83,7 +84,7 @@ class ProductController extends Controller
     }
 
     /**
-     * Show the form for editing the specified Product.
+     * Show the form for editing the specified product.
      *
      * @param int $id
      *
@@ -103,14 +104,14 @@ class ProductController extends Controller
     }
 
     /**
-     * Update the specified Product in storage.
+     * Update the specified product in storage.
      *
      * @param int $id
-     * @param UpdateProductRequest $request
+     * @param UpdateproductRequest $request
      *
      * @return Response
      */
-    public function update($id, UpdateProductRequest $request)
+    public function update($id, UpdateproductRequest $request)
     {
         $product = $this->productRepository->find($id);
 
@@ -128,7 +129,7 @@ class ProductController extends Controller
     }
 
     /**
-     * Remove the specified Product from storage.
+     * Remove the specified product from storage.
      *
      * @param int $id
      *

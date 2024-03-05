@@ -1,15 +1,44 @@
-public function store(Request $request)
+<?php
+
+namespace App\Repositories;
+
+use App\Models\product;
+use App\Repositories\BaseRepository;
+
+/**
+ * Class productRepository
+ * @package App\Repositories
+ * @version March 5, 2024, 11:52 am UTC
+*/
+
+class productRepository extends BaseRepository
 {
-    // Validate incoming data
-    $validatedData = $request->validate([
-        'name' => 'required|string|max:255',
-        'price' => 'required|numeric',
-        // Add validation rules for other fields as needed
-    ]);
+    /**
+     * @var array
+     */
+    protected $fieldSearchable = [
+        'name',
+        'description',
+        'colour',
+        'price',
+        'image'
+    ];
 
-    // Create a new product using the repository
-    $product = $this->productRepository->create($validatedData);
+    /**
+     * Return searchable fields
+     *
+     * @return array
+     */
+    public function getFieldsSearchable()
+    {
+        return $this->fieldSearchable;
+    }
 
-    // Optionally, you can return a response or redirect to a page
-    return response()->json(['message' => 'Product created successfully', 'product' => $product]);
+    /**
+     * Configure the Model
+     **/
+    public function model()
+    {
+        return product::class;
+    }
 }

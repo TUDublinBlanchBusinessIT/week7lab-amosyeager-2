@@ -2,27 +2,44 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model as Model;
-
-
+use Eloquent as Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
- * Class Product
+ * Class product
  * @package App\Models
- * @version March 4, 2024, 3:31 pm UTC
+ * @version March 5, 2024, 11:52 am UTC
  *
+ * @property \Illuminate\Database\Eloquent\Collection $orderdetails
+ * @property string $name
+ * @property string $description
+ * @property string $colour
+ * @property number $price
+ * @property string $image
  */
-class Product extends Model
+class product extends Model
 {
+    use SoftDeletes;
 
+    use HasFactory;
 
-    public $table = 'products';
+    public $table = 'product';
     
+    const CREATED_AT = 'created_at';
+    const UPDATED_AT = 'updated_at';
+
+
+    protected $dates = ['deleted_at'];
 
 
 
     public $fillable = [
-        
+        'name',
+        'description',
+        'colour',
+        'price',
+        'image'
     ];
 
     /**
@@ -31,7 +48,12 @@ class Product extends Model
      * @var array
      */
     protected $casts = [
-        
+        'id' => 'integer',
+        'name' => 'string',
+        'description' => 'string',
+        'colour' => 'string',
+        'price' => 'decimal:3',
+        'image' => 'string'
     ];
 
     /**
@@ -40,8 +62,21 @@ class Product extends Model
      * @var array
      */
     public static $rules = [
-        
+        'name' => 'nullable|string|max:30',
+        'description' => 'nullable|string|max:30',
+        'colour' => 'nullable|string|max:30',
+        'price' => 'nullable|numeric',
+        'image' => 'nullable|string|max:30',
+        'created_at' => 'nullable',
+        'updated_at' => 'nullable',
+        'deleted_at' => 'nullable'
     ];
 
-    
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     **/
+    public function orderdetails()
+    {
+        return $this->hasMany(\App\Models\Orderdetail::class, 'productid');
+    }
 }

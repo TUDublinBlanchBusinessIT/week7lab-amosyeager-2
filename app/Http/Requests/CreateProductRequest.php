@@ -3,9 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use App\Models\Product;
+use App\Models\product;
 
-class CreateProductRequest extends FormRequest
+class CreateproductRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,6 +24,6 @@ class CreateProductRequest extends FormRequest
      */
     public function rules()
     {
-        return Product::$rules;
+        return product::$rules;
     }
 }
