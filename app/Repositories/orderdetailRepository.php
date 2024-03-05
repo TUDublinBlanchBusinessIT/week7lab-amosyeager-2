@@ -2,26 +2,25 @@
 
 namespace App\Repositories;
 
-use App\Models\product;
+use App\Models\orderdetail;
 use App\Repositories\BaseRepository;
 
 /**
- * Class productRepository
+ * Class orderdetailRepository
  * @package App\Repositories
- * @version March 5, 2024, 11:57 am UTC
+ * @version March 5, 2024, 11:58 am UTC
 */
 
-class productRepository extends BaseRepository
+class orderdetailRepository extends BaseRepository
 {
     /**
      * @var array
      */
     protected $fieldSearchable = [
-        'name',
-        'description',
-        'colour',
-        'price',
-        'image'
+        'productid',
+        'orderid',
+        'quantity',
+        'subtotal'
     ];
 
     /**
@@ -39,6 +38,6 @@ class productRepository extends BaseRepository
      **/
     public function model()
     {
-        return product::class;
+        return orderdetail::class;
     }
 }
